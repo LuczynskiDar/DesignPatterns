@@ -13,8 +13,10 @@ namespace DesignPatterns
             Demo demoBuilder = new Demo();
             demoBuilder.RunDemoBuilder();
             Console.WriteLine(Environment.NewLine);
-            var cb = new Variable("Name", "string");
-            Console.WriteLine(cb.ToStringIntend(0));
+            // var cb = new Variable("Name", "string");
+            // Console.WriteLine(cb.ToStringIntend(0));
+            var cb = new CodeBuilderRunner();
+            cb.runner();
 
         }
     }

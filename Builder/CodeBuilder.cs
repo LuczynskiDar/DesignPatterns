@@ -8,7 +8,7 @@ namespace DesignPatterns.CodeBuilder
 
     public class Variable
     {
-        private string NameVariable, TypeVariable;
+        public string NameVariable, TypeVariable;
         private int codeIntend = 2;
         public List<Variable> variableList = new List<Variable>();
         public Variable()
@@ -25,36 +25,35 @@ namespace DesignPatterns.CodeBuilder
         {
             var sb = new StringBuilder();
             var currentIntend =  new string(' ', codeIntend * intend);
-            sb.Append($"{currentIntend}public class {NameVariable}\n{{");
-
-            if (!string.IsNullOrWhiteSpace(TypeVariable))
+            if(string.IsNullOrWhiteSpace(TypeVariable))
             {
-                sb.Append(new string(' ', codeIntend * (intend + 1)));
-                sb.Append(TypeVariable);
-                sb.Append("\n");
-            }
-            
-            
+                sb.Append($"{currentIntend}public class {NameVariable}\n{{\n");
+            } 
+            else 
+            {
+                sb.Append(new string(' ', codeIntend * (intend + 1))
+                        +$"public {TypeVariable} {NameVariable};\n" );
+            }           
             variableList.ForEach(v => sb.Append(v.ToStringIntend(intend+1)));
-            sb.Append( "\n"+ @"}");
             return sb.ToString();
         }
         public override string ToString()
         {
-             return ToStringIntend(0);
+             return ToStringIntend(0) + @"}"+ "\n";
         }
 
         
-
     }
     public class CodeBuilder
     {
-        private readonly string rootName;
+        private readonly string nameVariable;
         Variable root = new Variable();
 
         public CodeBuilder(string rootName)
         {
-            this.rootName = rootName;
+
+            this.nameVariable = rootName;
+            root.NameVariable = rootName;
         }
 
         public CodeBuilder AddVariable(string nameVariable, string typeVariable)
@@ -65,11 +64,30 @@ namespace DesignPatterns.CodeBuilder
         }
         
 
+        
+        public void Clear()
+        {
+            // root = new Variable{NameVariable = rootName};
+        }
+
+
         public override string ToString()
         {
             return root.ToString();
         }
         
+    }
+
+    public class CodeBuilderRunner
+    {
+        public void runner()
+        {
+            // ordinary non-fluent builder
+            var builder = new CodeBuilder("Person");
+            builder.AddVariable("Name","string").AddVariable("Age","int");
+            Console.WriteLine("Fluent invoke my builder");
+            Console.WriteLine(builder.ToString());
+        }
     }
 }
 
