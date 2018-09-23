@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
 
-namespace DotNetDesignPatternDemos.Creational.Builder
+namespace DesignPatterns.CreationalBuilder
 {
   class HtmlElement
   {
@@ -89,38 +89,44 @@ namespace DotNetDesignPatternDemos.Creational.Builder
 
   public class Demo
   {
-    // static void Main(string[] args)
-    // {
-    //   // if you want to build a simple HTML paragraph using StringBuilder
-    //   var hello = "hello";
-    //   var sb = new StringBuilder();
-    //   sb.Append("<p>");
-    //   sb.Append(hello);
-    //   sb.Append("</p>");
-    //   WriteLine(sb);
+    public void RunDemoBuilder()
+    {
+      // if you want to build a simple HTML paragraph using StringBuilder
+      var hello = "hello";
+      var sb = new StringBuilder();
+      sb.Append("<p>");
+      sb.Append(hello);
+      sb.Append("</p>");
+      WriteLine("a simple HTML paragraph using StringBuilder");
+      WriteLine(sb);
+      WriteLine(Environment.NewLine);
 
-    //   // now I want an HTML list with 2 words in it
-    //   var words = new[] {"hello", "world"};
-    //   sb.Clear();
-    //   sb.Append("<ul>");
-    //   foreach (var word in words)
-    //   {
-    //     sb.AppendFormat("<li>{0}</li>", word);
-    //   }
-    //   sb.Append("</ul>");
-    //   WriteLine(sb);
+      // now I want an HTML list with 2 words in it
+      var words = new[] {"hello", "world"};
+      sb.Clear();
+      sb.Append("<ul>");
+      foreach (var word in words)
+      {
+        sb.AppendFormat("<li>{0}</li>", word);
+      }
+      sb.Append("</ul>");
+      WriteLine("HTML list with 2 words in it");
+      WriteLine(sb);
+      WriteLine(Environment.NewLine);
 
-    //   // ordinary non-fluent builder
-    //   var builder = new HtmlBuilder("ul");
-    //   builder.AddChild("li", "hello");
-    //   builder.AddChild("li", "world");
-    //   WriteLine(builder.ToString());
+      // ordinary non-fluent builder
+      var builder = new HtmlBuilder("ul");
+      builder.AddChild("li", "hello");
+      builder.AddChild("li", "world");
+      WriteLine("Ordinary non-fluent builder");
+      WriteLine(builder.ToString());
 
-    //   // fluent builder
-    //   sb.Clear();
-    //   builder.Clear(); // disengage builder from the object it's building, then...
-    //   builder.AddChildFluent("li", "hello").AddChildFluent("li", "world");
-    //   WriteLine(builder);
-    // }
+      // fluent builder
+      sb.Clear();
+      builder.Clear(); // disengage builder from the object it's building, then...
+      WriteLine("fluent builder");
+      builder.AddChildFluent("li", "hello").AddChildFluent("li", "world");
+      WriteLine(builder);
+    }
   }
 }
